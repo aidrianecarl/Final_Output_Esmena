@@ -59,7 +59,7 @@ const defaultProducts: Product[] = [
     specification: "40-hour battery, ANC, Bluetooth 5.0",
     rating: 4.6,
     price: 349.99,
-    quantity: 8,
+    quantity: 3,
   },
   {
     id: "3",
