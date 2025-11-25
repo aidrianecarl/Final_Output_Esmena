@@ -1,13 +1,14 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
+import { ProductProvider } from "@/context/product-context"
 import "./globals.css"
 
 const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "ProductHub - Product Management App",
+  title: "Aidriane Shop - Product Management App",
   description: "Modern product management and e-commerce application with real-time inventory tracking",
   icons: {
     icon: [
@@ -36,7 +37,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`font-sans antialiased`}>
-        {children}
+        <ProductProvider>{children}</ProductProvider>
       </body>
     </html>
   )
