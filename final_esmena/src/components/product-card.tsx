@@ -3,6 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { useProducts, type Product } from "@/context/product-context"
+import StarRating from "./star-rating"
 
 interface ProductCardProps {
   product: Product
@@ -50,15 +51,8 @@ export default function ProductCard({ product }: ProductCardProps) {
         </Link>
 
         {/* Rating */}
-        <div className="flex items-center gap-1 mt-2">
-          <div className="flex text-yellow-400">
-            {[...Array(5)].map((_, i) => (
-              <span key={i} className={i < Math.floor(product.rating) ? "★" : "☆"}>
-                {""}
-              </span>
-            ))}
-          </div>
-          <span className="text-xs text-muted-foreground">({product.rating})</span>
+        <div className="mt-2">
+          <StarRating rating={product.rating} size="sm" />
         </div>
 
         {/* Price and Quantity */}
