@@ -1,7 +1,9 @@
 import Navbar from "@/components/navbar"
 import ProductDetail from "@/components/product-detail"
 
-export default function ProductPage({ params }: { params: { id: string } }) {
+export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-slate-50 dark:to-slate-900">
       {/* Header */}
@@ -18,7 +20,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
           </svg>
           Back to Products
         </a>
-        <ProductDetail productId={params.id} />
+        <ProductDetail productId={id} />
       </main>
     </div>
   )

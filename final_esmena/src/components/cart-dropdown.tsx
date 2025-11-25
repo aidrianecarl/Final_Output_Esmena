@@ -72,7 +72,7 @@ export default function CartDropdown({ totalItems }: CartDropdownProps) {
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-semibold text-foreground truncate">{item.name}</p>
                       <p className="text-xs text-muted-foreground">
-                        {item.cartQuantity} x ${item.price.toFixed(2)}
+                        {item.cartQuantity} x ₱{item.price.toFixed(2)}
                       </p>
                     </div>
                   </div>
@@ -85,7 +85,7 @@ export default function CartDropdown({ totalItems }: CartDropdownProps) {
               <div className="border-t border-border p-4 space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-muted-foreground">Total:</span>
-                  <span className="font-bold text-lg text-foreground">${totalPrice.toFixed(2)}</span>
+                  <span className="font-bold text-lg text-foreground">₱{totalPrice.toFixed(2)}</span>
                 </div>
                 <Link
                   href="/cart"

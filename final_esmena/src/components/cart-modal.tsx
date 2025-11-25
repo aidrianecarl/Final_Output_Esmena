@@ -47,7 +47,7 @@ export default function CartModal({ isOpen, onClose, cart, totalPrice }: CartMod
                 />
                 <div className="flex-1">
                   <h3 className="font-semibold text-foreground text-sm">{item.name}</h3>
-                  <p className="text-xs text-muted-foreground">${item.price.toFixed(2)}</p>
+                  <p className="text-xs text-muted-foreground">₱{item.price.toFixed(2)}</p>
                   <div className="flex items-center gap-2 mt-2">
                     <button
                       onClick={() => updateCartQuantity(item.id, item.cartQuantity - 1)}
@@ -80,7 +80,7 @@ export default function CartModal({ isOpen, onClose, cart, totalPrice }: CartMod
           <div className="border-t border-border p-6 space-y-4">
             <div className="flex items-center justify-between">
               <span className="text-muted-foreground">Subtotal</span>
-              <span className="font-bold text-lg text-foreground">${totalPrice.toFixed(2)}</span>
+              <span className="font-bold text-lg text-foreground">₱{totalPrice.toFixed(2)}</span>
             </div>
             <button className="w-full py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold rounded-lg hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300">
               Checkout

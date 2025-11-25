@@ -24,7 +24,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   return (
     <div className="group h-full bg-white dark:bg-slate-800 rounded-xl border border-border hover:border-blue-500/50 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
       {/* Image Container */}
-      <Link href={`/product/${product.id}`}>
+      <Link href={`/products/${product.id}`}>
         <div className="relative h-48 bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-800 overflow-hidden">
           <img
             src={product.image || "/placeholder.svg"}
@@ -44,7 +44,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
       {/* Content */}
       <div className="p-4 flex flex-col h-[calc(100%-192px)]">
-        <Link href={`/product/${product.id}`}>
+        <Link href={`/products/${product.id}`}>
           <h3 className="font-semibold text-foreground line-clamp-2 hover:text-blue-600 transition-colors group-hover:underline">
             {product.name}
           </h3>
@@ -58,7 +58,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         {/* Price and Quantity */}
         <div className="flex items-center justify-between mt-3 mb-3">
           <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            ${product.price.toFixed(2)}
+            ₱{product.price.toFixed(2)}
           </span>
           <span className="text-xs text-muted-foreground">{product.quantity} in stock</span>
         </div>

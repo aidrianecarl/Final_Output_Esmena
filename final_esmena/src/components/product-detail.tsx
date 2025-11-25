@@ -4,7 +4,14 @@ import { useState, useMemo } from "react"
 import { useProducts } from "@/context/product-context"
 import StarRating from "./star-rating"
 import ProductCard from "./product-card"
-import { Pagination } from "@/components/ui/pagination"
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination"
 
 interface ProductDetailProps {
   productId: string
@@ -18,25 +25,33 @@ export default function ProductDetail({ productId }: ProductDetailProps) {
   const [isAdded, setIsAdded] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
 
-  const relatedProducts = useMemo(() => {
-    return products.filter((p) => p.category === product.category && p.id !== productId)
-  }, [products, productId])
-
+  // FIX — Define product BEFORE useMemo
   const product = products.find((p) => p.id === productId)
+
+  // FIX — Prevent errors if product is undefined
+  const relatedProducts = useMemo(() => {
+    if (!product) return []
+    return products.filter(
+      (p) => p.category === product.category && p.id !== productId
+    )
+  }, [products, product, productId])
+
   const isLowStock = product ? product.quantity < 5 : false
 
   const totalPages = Math.ceil(relatedProducts.length / RELATED_PRODUCTS_PER_PAGE)
   const paginatedRelated = relatedProducts.slice(
     (currentPage - 1) * RELATED_PRODUCTS_PER_PAGE,
-    currentPage * RELATED_PRODUCTS_PER_PAGE,
+    currentPage * RELATED_PRODUCTS_PER_PAGE
   )
 
   const handleAddToCart = () => {
+    if (!product) return
     addToCart(product, quantity)
     setIsAdded(true)
     setTimeout(() => setIsAdded(false), 2000)
   }
 
+  // Product Not Found
   if (!product) {
     return (
       <div className="text-center py-12">
@@ -47,16 +62,22 @@ export default function ProductDetail({ productId }: ProductDetailProps) {
 
   return (
     <div className="space-y-12 animate-in fade-in duration-500">
+
       {/* Product Detail Section */}
       <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
+        
         {/* Large Image */}
         <div className="flex items-center justify-center">
           <div className="w-full aspect-square bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-800 rounded-2xl overflow-hidden flex items-center justify-center shadow-xl hover:shadow-2xl transition-shadow duration-300">
-            <img src={product.image || "/placeholder.svg"} alt={product.name} className="w-full h-full object-cover" />
+            <img
+              src={product.image || "/placeholder.svg"}
+              alt={product.name}
+              className="w-full h-full object-cover"
+            />
           </div>
         </div>
 
-        {/* Details */}
+        {/* Product Info */}
         <div className="space-y-6">
           <div>
             <div className="inline-block bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-3 py-1 rounded-full text-sm font-semibold mb-3">
@@ -72,7 +93,7 @@ export default function ProductDetail({ productId }: ProductDetailProps) {
           <div className="space-y-2">
             <p className="text-muted-foreground text-sm uppercase tracking-wide">Price</p>
             <p className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              ${product.price.toFixed(2)}
+              ₱{product.price.toFixed(2)}
             </p>
           </div>
 
@@ -90,17 +111,23 @@ export default function ProductDetail({ productId }: ProductDetailProps) {
             </div>
           </div>
 
-          {/* Stock Status */}
+          {/* Stock */}
           <div className="flex items-center gap-3 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-900/50">
-            <div className={`w-3 h-3 rounded-full ${isLowStock ? "bg-red-500 animate-pulse" : "bg-green-500"}`} />
+            <div
+              className={`w-3 h-3 rounded-full ${isLowStock ? "bg-red-500 animate-pulse" : "bg-green-500"}`}
+            />
             <p
-              className={`font-medium ${isLowStock ? "text-red-600 dark:text-red-400" : "text-green-600 dark:text-green-400"}`}
+              className={`font-medium ${
+                isLowStock ? "text-red-600 dark:text-red-400" : "text-green-600 dark:text-green-400"
+              }`}
             >
-              {isLowStock ? `Only ${product.quantity} left in stock` : `${product.quantity} in stock`}
+              {isLowStock
+                ? `Only ${product.quantity} left in stock`
+                : `${product.quantity} in stock`}
             </p>
           </div>
 
-          {/* Add to Cart and Buy Now Section */}
+          {/* Add to Cart */}
           <div className="flex flex-col gap-3 pt-4">
             <div className="flex items-center gap-3">
               <div className="flex items-center border-2 border-border rounded-lg overflow-hidden bg-background">
@@ -127,8 +154,8 @@ export default function ProductDetail({ productId }: ProductDetailProps) {
                 isAdded
                   ? "bg-green-500 shadow-lg shadow-green-500/30"
                   : product.quantity === 0
-                    ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-gradient-to-r from-blue-600 to-purple-600 hover:shadow-xl hover:shadow-blue-500/30 hover:scale-105 active:scale-95"
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-gradient-to-r from-blue-600 to-purple-600 hover:shadow-xl hover:shadow-blue-500/30 hover:scale-105 active:scale-95"
               }`}
             >
               {isAdded ? "✓ Added to Cart" : "Add to Cart"}
@@ -141,7 +168,7 @@ export default function ProductDetail({ productId }: ProductDetailProps) {
         </div>
       </div>
 
-      {/* Related Products Section */}
+      {/* Related Products */}
       {relatedProducts.length > 0 && (
         <div className="border-t border-border pt-12">
           <h2 className="text-3xl font-bold text-foreground mb-8">Related Products</h2>
@@ -152,13 +179,39 @@ export default function ProductDetail({ productId }: ProductDetailProps) {
             ))}
           </div>
 
+          {/* Pagination */}
           {totalPages > 1 && (
             <div className="flex justify-center mt-8">
-              <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
+              <Pagination>
+                <PaginationContent>
+
+                  <PaginationPrevious
+                    onClick={() =>
+                      setCurrentPage((prev) => Math.max(prev - 1, 1))
+                    }
+                  />
+
+                  <PaginationItem>
+                    <PaginationLink isActive>
+                      {currentPage}
+                    </PaginationLink>
+                  </PaginationItem>
+
+                  <PaginationNext
+                    onClick={() =>
+                      setCurrentPage((prev) =>
+                        Math.min(prev + 1, totalPages)
+                      )
+                    }
+                  />
+
+                </PaginationContent>
+              </Pagination>
             </div>
           )}
         </div>
       )}
+
     </div>
   )
 }

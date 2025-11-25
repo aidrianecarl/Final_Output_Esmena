@@ -95,7 +95,7 @@ export default function CartPage() {
                       </div>
 
                       <p className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                        ${item.price.toFixed(2)}
+                        ₱{item.price.toFixed(2)}
                       </p>
                     </div>
 
@@ -125,7 +125,7 @@ export default function CartPage() {
                       </div>
 
                       <p className="text-right mt-3 font-bold text-foreground">
-                        ${(item.price * item.cartQuantity).toFixed(2)}
+                        ₱{(item.price * item.cartQuantity).toFixed(2)}
                       </p>
                     </div>
                   </div>
@@ -141,7 +141,7 @@ export default function CartPage() {
                 <div className="space-y-4 mb-6 pb-6 border-b border-border">
                   <div className="flex justify-between text-muted-foreground">
                     <span>Subtotal</span>
-                    <span>${totalPrice.toFixed(2)}</span>
+                    <span>₱{totalPrice.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-muted-foreground">
                     <span>Shipping</span>
@@ -149,14 +149,14 @@ export default function CartPage() {
                   </div>
                   <div className="flex justify-between text-muted-foreground">
                     <span>Tax</span>
-                    <span>${(totalPrice * 0.1).toFixed(2)}</span>
+                    <span>₱{(totalPrice * 0.1).toFixed(2)}</span>
                   </div>
                 </div>
 
                 <div className="flex justify-between mb-6">
                   <span className="text-lg font-bold text-foreground">Total</span>
                   <span className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                    ${(totalPrice * 1.1).toFixed(2)}
+                    ₱{(totalPrice * 1.1).toFixed(2)}
                   </span>
                 </div>
 
